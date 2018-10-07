@@ -1,0 +1,14 @@
+
+Feature: Sign Up for Transaction Generator
+
+  @appium
+  Scenario: Validate Transaction Generator
+    Given I open the application
+    When I tap on SignUp button
+    When Enter the Username "<username>" and FamilyName "<familyName>"
+    Then I validate CreateAccount button
+    
+Examples:
+
+|username |familyName |
+|Amit     |Chatterjee |

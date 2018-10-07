@@ -1,0 +1,55 @@
+package utility;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
+
+import cucumber.api.java.After;
+import cucumber.api.java.Before;
+import io.appium.java_client.android.AndroidDriver;
+
+
+public class Hook {
+
+	private static WebDriver driver;
+	
+	@Before("@FunctionalTest")
+	public void setUp()
+	{
+		System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir")+"//drivers//chromedriver.exe");
+		driver= new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+	}
+	
+	@Before("@appium")
+	public void setUpAppium() throws MalformedURLException
+	{
+		DesiredCapabilities capabilities = new DesiredCapabilities();
+		capabilities.setCapability("platformVersion", "7.0");
+		capabilities.setCapability("platformName", "Android");
+		capabilities.setCapability("deviceName", "6744b475");
+		
+		capabilities.setCapability("appPackage", "com.mobilebank");
+		capabilities.setCapability("appActivity", "com.mobilebank.login.SplashActivity");
+		driver = new RemoteWebDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
+		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+	}
+	
+	@After
+	public void tearDown()
+	{
+		driver.quit();
+	}
+	
+	public static WebDriver getDriver()
+	{
+		return driver;
+	}
+}

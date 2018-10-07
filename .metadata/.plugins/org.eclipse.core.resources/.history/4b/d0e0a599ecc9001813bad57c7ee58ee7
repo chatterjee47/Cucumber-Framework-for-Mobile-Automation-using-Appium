@@ -1,0 +1,43 @@
+package StepDefinition;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.testng.Assert;
+
+import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
+import utility.Hook;
+
+public class Registration {
+
+private WebDriver driver;
+	
+	public Registration() {
+		this.driver = Hook.getDriver();
+	}
+	
+	@Given("^I open the application$")
+	public void i_open_the_application() throws Throwable {
+		Assert.assertTrue(driver.findElement(By.xpath("//*[@text='Accessibility']")).isDisplayed());
+	}
+
+	@Then("^I tap on SignUp button$")
+	public void I_tap_on_SignUp_button() throws Throwable {
+		driver.findElement(By.xpath("//*[@text='Accessibility']")).click();
+	}
+
+	@When("^Enter the Username \"(.*)\" and FamilyName \"(.*)\"$")			
+    public void enter_the_Username_and_FamilyName(String username,String familyName) throws Throwable 							
+    {		
+       System.out.println("Entering Username");
+       driver.findElement(By.name("uid")).sendKeys(username);	
+       System.out.println("Entering Password");
+       driver.findElement(By.name("password")).sendKeys(familyName);					
+    }		
+	
+	@When("^I tap CreateAccount button$")
+	public void I_tap_CreateAccount_button() throws Throwable {
+		driver.findElement(By.xpath("//*[@text='Accessibility']")).click();
+	}
+}
